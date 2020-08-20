@@ -13,14 +13,17 @@ export default function ({ types: t }: Babel) {
   const visitor: Visitor = {
     // export ...
     ExportNamedDeclaration(path) {
-      path.traverse({
-        // export getServerSideProps
-        Identifier(path) {
-          if (path.node.name === "getServerSideProps") {
-            path.remove();
-          }
+      path.traverse(
+        {
+          // export getServerSideProps
+          Identifier(path) {
+            if (path.node.name === "getServerSideProps") {
+              this.parentPath.remove(); // remove the whole export
+            }
+          },
         },
-      });
+        { parentPath: path }
+      );
     },
   };
   return { visitor };

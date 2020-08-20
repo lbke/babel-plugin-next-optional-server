@@ -14,26 +14,38 @@ function runPlugin(code: string) {
   return res;
 }
 
+const normalizeBlank = (str) => {
+  str.replace("\t", " ").replace("\n", " ").replace(/\s+/, " ");
+};
+
+const defaultCode = '"use strict";'; // mandatory for modules so it will always be in the response
 import { transform } from "@babel/core";
 describe("remove getServerSideProps", () => {
   test("remove exported sync getServerSideProps", () => {
-    const code = `export getServerSideProps () { return {} }`;
+    const code = `export function getServerSideProps () { return {} }`;
     const res = runPlugin(code);
-    expect(res).toEqual("");
+    expect(res.code).toEqual(`${defaultCode}`);
   });
   test("remove exported async getServerSideProps", () => {
-    const code = `export async getServerSideProps () { return {} }`;
+    const code = `export async function getServerSideProps () { return {} }`;
     const res = runPlugin(code);
-    expect(res).toEqual("");
+    expect(res.code).toEqual(`${defaultCode}`);
   });
   test("remove exported sync arrow getServerSideProps", () => {
     const code = `export const getServerSideProps = () => { return {} }`;
     const res = runPlugin(code);
-    expect(res).toEqual("");
+    expect(res.code).toEqual(`${defaultCode}`);
   });
   test("remove exported async getServerSideProps", () => {
     const code = `export const getServerSideProps = async () => { return {} }`;
     const res = runPlugin(code);
-    expect(res).toEqual("");
+    expect(res.code).toEqual(`${defaultCode}`);
+  });
+  test("ignore unexported getServerSideProps", () => {
+    const code = `const getServerSideProps = async () => { return {}; };`; // we have to add semis so it matches the Babel result
+    const res = runPlugin(code);
+    expect(normalizeBlank(res.code)).toEqual(
+      normalizeBlank(`${defaultCode} ${code}`)
+    );
   });
 });
