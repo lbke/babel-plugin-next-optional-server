@@ -1,0 +1,25 @@
+{
+  "name": "babel-plugin-next-optional-server",
+  "version": "0.0.1",
+  "description": "Remove any code in Next.js applications that prevents a fully static \"next export\", in order to support multiple build target. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc"
+  },
+  "author": "Eric Burel (LBKE, Vulcan)",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.11.1",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-typescript": "^7.10.4",
+    "@babel/traverse": "^7.11.0",
+    "@babel/types": "^7.11.0",
+    "@types/babel__traverse": "^7.0.13",
+    "@types/jest": "^26.0.10",
+    "babel-jest": "^26.3.0",
+    "babel-preset-typescript": "^7.0.0-alpha.19",
+    "jest": "^26.4.0",
+    "typescript": "^3.9.7"
+  }
+}
