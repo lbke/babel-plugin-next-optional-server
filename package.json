@@ -2,9 +2,14 @@
   "name": "babel-plugin-next-optional-server",
   "version": "0.0.1",
   "description": "Remove any code in Next.js applications that prevents a fully static \"next export\", in order to support multiple build target. ",
+  "files": [
+    "lib/**/*"
+  ],
   "main": "lib/plugin.js",
   "types": "lib/plugin.d.ts",
   "scripts": {
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test",
     "test": "jest",
     "build": "rm -Rf lib && tsc --project tsconfig.build.json"
   },
